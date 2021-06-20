@@ -22,3 +22,4 @@ Feature: CSV to PDF Cyclist licenses API
         Given I am an authenticated user
         When I upload a correctly formatted .csv "file"
         Then The API responds with a 200 status
+        And The File gets stored on server
