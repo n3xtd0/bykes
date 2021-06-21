@@ -18,7 +18,7 @@ Using <a href="https://docs.behat.org/en/latest/quick_start.html" target="_blank
 
 ## TODO
 - storing csv on server or aws/Azure. 
--nightly cron 
+- nightly cron 
     . get daily CSV uploads. 
     . transform them from CSV to PDF
     . email PDF to User
