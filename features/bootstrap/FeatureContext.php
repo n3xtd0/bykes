@@ -2,8 +2,6 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 
 /**
  * Defines application features from the specific context.
@@ -36,14 +34,13 @@ class FeatureContext implements Context
     {
         throw new PendingException();
     }
-    
+
     /**
      * @When I upload a :arg1 other than .csv
      */
     public function iUploadAOtherThanCsv($arg1)
     {
 
-        //TODO: validateFileType()
         throw new PendingException();
     }
 
