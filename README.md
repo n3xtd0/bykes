@@ -17,11 +17,11 @@ Using <a href="https://docs.behat.org/en/latest/quick_start.html" target="_blank
 
 
 ## TODO
-- storing csv on server or aws/Azure. 
+- storing csv on server or aws/Azure
 - nightly cron 
-    . get daily CSV uploads. 
-    . transform them from CSV to PDF
-    . email PDF to User
-    . Email to owner when finish daily process with summary nightly activity
+    - get daily CSV uploads
+    - transform them from CSV to PDF
+    - email PDF to User
+    - Email to owner when finish daily process with summary nightly activity
     
 - api/getPDF/{userid} endpoint
