@@ -23,3 +23,16 @@ Feature: CSV to PDF Cyclist licenses API
         When I upload a correctly formatted .csv "file"
         Then The API responds with a 200 status
         And The File gets stored on server
+
+    Scenario: Nightly CSV to PDF process
+        Given I am an administrator
+        When the nightly script is run
+        Then The API gets all not processed CSV uploads urls / ids
+        And transform them from CSV to PDF
+        And Sends an email to each user with the PDF attached
+        And Sends an email to both partner certification center and BA
+
+    Scenario: Get PDF License
+        Given I am an authenticated user
+        When I call the getPDFLicense endpoint
+        Then The API returns with the PDF if found

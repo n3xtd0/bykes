@@ -4,8 +4,12 @@ namespace Tests\Unit\Api;
 
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
+use App\Models\UserCsv;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 
-class csvUpload extends TestCase {
+class csvUploadTest extends TestCase {
+    use RefreshDatabase;
 
 
     public function testNoFileAttachedReturns400(){
@@ -29,7 +33,29 @@ class csvUpload extends TestCase {
         $apiResponse->assertStatus(200);
     }
 
-    //Todo: testFileGetsSavedOnServer
 
+    public function testCSVGetsStoredOnFilesystem(){
+        $fileNameToTest = 'document.csv';
+
+        $file = UploadedFile::fake()->create($fileNameToTest, 50, 'text/csv');
+        $this->post('api/csvUpload', ['file' => $file]);
+        Storage::disk('testing')->assertExists($file->hashName());
+    }
+
+
+    public function testCSVGetsStoredOnDatabase(){
+        $fileNameToTest = 'document.csv';
+
+        $file = UploadedFile::fake()->create($fileNameToTest, 50, 'text/csv');
+        $this->post('api/csvUpload', ['file' => $file]);
+
+        $mockedUserId = 1; //Todo: Test with authenticated UserId
+        $uploadedCSV = UserCsv::where('filename', 'like', "%$fileNameToTest")
+            ->where('is_processed', 0)
+            ->where('user_id', $mockedUserId)
+            ->get()->first();
+
+        $this->assertSame($fileNameToTest, $uploadedCSV->filename);
+    }
 
 }
