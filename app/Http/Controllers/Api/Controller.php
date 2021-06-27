@@ -11,42 +11,27 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\UserCsv;
+use Exception;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    const RULE_REQUIRED      = 'required';
-    const RULE_CSV_FILE_TYPE = 'mimetypes:text/csv';
-
-    protected array $validationRules = [];
-
-    public function __construct()    {
-        $this->validationRules = [self::RULE_REQUIRED, self::RULE_CSV_FILE_TYPE];
-    }
-
 
     public function csvUpload(Request $request) :JsonResponse
     {
-        foreach ($this->validationRules as $rule){
-            $validator = Validator::make($request->all(), ['file' => $rule]);
-
-            if ($validator->fails())
-                return response()->json(['message' => $validator->errors()->get('file')], $this->getStatus($rule));
+        try {
+            $validationHandler = new csvUploadValidationHandler();
+            $validatedFile = $validationHandler->getValidatedFile($request);
+        }catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
 
         $mockedUserId = 1; //Todo: use authenticated UserId
-        $this->saveCSVOnFilesystem($request->all()["file"]);
-        $this->saveUserCSVOnDatabase($request->all()["file"]->name, $mockedUserId);
+        $this->saveCSVOnFilesystem($validatedFile);
+        $this->saveUserCSVOnDatabase($validatedFile->name, $mockedUserId);
 
         return response()->json(['message'=>'File correctly uploaded'], 200);
-    }
-
-    private function getStatus(String $rule) :int
-    {
-        if ($rule == self::RULE_REQUIRED)      return 400;
-        if ($rule == self::RULE_CSV_FILE_TYPE) return 415;
-        return 200;
     }
 
     private function saveUserCSVOnDatabase($filename, $userId) :void
@@ -63,7 +48,43 @@ class Controller extends BaseController
     }
 
 
+
+    public function getNotProcessedCSVIds(Request $request) :JsonResponse
+    {
+        return response()->json(['message'=>'ok'], 200);
+    }
+
+
 }
 
+
+class csvUploadValidationHandler{
+    const RULE_REQUIRED      = 'required';
+    const RULE_CSV_FILE_TYPE = 'mimetypes:text/csv';
+
+    protected array $validationRules = [];
+
+    public function __construct()    {
+        $this->validationRules = [self::RULE_REQUIRED, self::RULE_CSV_FILE_TYPE];
+    }
+
+    public function getValidatedFile($request)
+    {
+        foreach ($this->validationRules as $rule){
+            $validator = Validator::make($request->all(), ['file' => $rule]);
+
+            if ($validator->fails())
+                throw new Exception($validator->errors()->get('file')[0], $this->getStatus($rule));
+        }
+        return $request->all()["file"];
+    }
+
+    private function getStatus(String $rule) :int
+    {
+        if ($rule == self::RULE_REQUIRED)      return 400;
+        if ($rule == self::RULE_CSV_FILE_TYPE) return 415;
+        return 200;
+    }
+}
 
 
