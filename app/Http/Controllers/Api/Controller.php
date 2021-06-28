@@ -49,10 +49,27 @@ class Controller extends BaseController
 
 
 
-    public function getNotProcessedCSVIds(Request $request) :JsonResponse
+    public function TransformNewCSVsToPDFAndSendEmails() :void
     {
-        return response()->json(['message'=>'ok'], 200);
+        $notProcessedCSVs = UserCsv::where('is_processed', 0)->get();
+        foreach ($notProcessedCSVs as $userCsvModel){
+            $this->transformCSVToPDF($userCsvModel);
+            $this->emailUser($userCsvModel);
+            $this->emailCertificationCenterAndBA($userCsvModel);
+        }
     }
+
+    private function transformCSVToPDF($userCsvModel){
+        //Todo: implement
+    }
+    private function emailUser($newCSVs){
+        //Todo: implement
+    }
+    private function emailCertificationCenterAndBA($newCSVs){
+        //Todo: implement
+    }
+
+
 
 
 }

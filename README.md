@@ -10,7 +10,6 @@ I started learning about TDD and on the process I also discovered BDD and got in
 Using <a href="https://docs.behat.org/en/latest/quick_start.html" target="_blank">behat</a> I made my scenarios definitions (take a look at features/csvUpload.feature) and started my unit testing from what I got.
 
 ## TODO
-- storing csv on server or aws/Azure
 - nightly cron 
     - get daily CSV uploads
     - transform them from CSV to PDF
