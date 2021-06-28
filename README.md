@@ -8,6 +8,7 @@ Once you download the project follow this <a href="https://laravel.com/docs/8.x/
 ## Assessment Approach
 I started learning about TDD and on the process I also discovered BDD and got in love with it. So I thought it could be a good opportunity to implement it.
 Using <a href="https://docs.behat.org/en/latest/quick_start.html" target="_blank">behat</a> I made my scenarios definitions (take a look at features/csvUpload.feature) and started my unit testing from what I got.
+I ended up only using behat for testing definitions and implement them on my own
 
 ## TODO
 - nightly cron 
