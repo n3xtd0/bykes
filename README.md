@@ -3,7 +3,13 @@
 
 This project is build on Laravel latest version 
 
-Once you download the project follow this <a href="https://laravel.com/docs/8.x/installation" target="_blank">Instalation instructions</a> to deploy laravel docker containers to get this working
+## Instalation steps:
+- Install <a href="https://www.docker.com/products/docker-desktop" target="_blank">docker desktop</a> if not already installed
+- If you are on **Windows**, you should ensure that Windows Subsystem for Linux 2 (WSL2) is installed and enabled. WSL allows you to run Linux binary executables natively on Windows 10. Information on how to install and enable WSL2 can be found within <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank">Microsoft's developer environment documentation.</a>
+- Git clone this repo. (on **windows** you should do it from wsl)
+- Copy .env.example and rename the copy to .env
+- execute docker-compose exec laravel.test composer install
+
 
 ## Assessment Approach
 I started learning about TDD and on the process I also discovered BDD and got in love with it. So I thought it could be a good opportunity to implement it.
