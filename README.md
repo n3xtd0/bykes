@@ -5,11 +5,15 @@ This project is build on Laravel latest version
 
 ## Instalation steps:
 - Install <a href="https://www.docker.com/products/docker-desktop" target="_blank">docker desktop</a> if not already installed
-- If you are on **Windows**, you should ensure that Windows Subsystem for Linux 2 (WSL2) is installed and enabled. WSL allows you to run Linux binary executables natively on Windows 10. Information on how to install and enable WSL2 can be found within <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank">Microsoft's developer environment documentation.</a>
-- Git clone this repo. (on **windows** you should do it from wsl)
+- If you are **on Windows**, you should ensure that Windows Subsystem for Linux 2 (WSL2) is installed and enabled. WSL allows you to run Linux binary executables natively on Windows 10. Information on how to install and enable WSL2 can be found within <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" target="_blank">Microsoft's developer environment documentation.</a>
+- Git clone this repo. (**on Windows** you should do it from wsl)
 - Copy .env.example and rename the copy to .env
-- execute docker-compose exec laravel.test composer install
+- execute `docker-compose up` and wait..
+- execute `docker-compose exec laravel.test composer install`
+- execute `sail up -d`
 
+That should be it! 
+If a missing key message appears after trying to load http://localhost then execute `sail php artisan key:generate`
 
 ## Assessment Approach
 I started learning about TDD and on the process I also discovered BDD and got in love with it. So I thought it could be a good opportunity to implement it.
